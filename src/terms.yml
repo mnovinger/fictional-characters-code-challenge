@@ -1,11 +1,16 @@
 ---
 intros:
-  - The movie should be about
+  - The movie is about
   - The book's main character is
   - I once met
   - Have you ever heard of
   - My idol has got to be
   - Allow me to introduce
+  - Did I ever tell you about
+  - Yesterday I ran into
+  - There's a new show about
+  - The documentary tells the story of
+  - The play explores the life of
 names:
   - Avril Althaus
   - Nadine Nelms
@@ -84,21 +89,40 @@ adjectives:
   - kung-fu
   - clinically insane
   - figure-skating
-  - breakfast-eating
   - marathon-running
   - oblivious
   - hypothetical
   - aspiring
   - degree-holding
+  - hyperactive
+  - clumsy
+  - ambidextrous
+  - able-bodied
+  - swing-dancing
+  - somewhat uncaring
+  - sarcastically pandering
+  - back-flipping
+  - flip-flop-wearing
+  - donut-eating
+  - self-loathing
+  - sports drink guzzling
+  - bench-pressing
+  - know-it-all
+  - levitating
+  - zombie
+  - poetry-writing
+  - absent-minded
+  - scuba-diving
+  - unreasonably gullible
 nouns:
   - accountant
   - soviet astronaut
-  - refrigerator engineer
+  - refrigerator delivery person
   - pastry chef
   - helicopter pilot
   - space weather forecaster
   - paratrooper extraordinaire
-  - bookkeeper
+  - antique bookkeeper
   - botanist
   - chimney sweep
   - tap dancer
@@ -113,9 +137,27 @@ nouns:
   - world-record holder
   - cheese hobbyist
   - mail carrier
-  - human being
   - ice cream truck driver
   - big leagues umpire
+  - cat burglar
+  - window washer
+  - food truck cook
+  - coffee table book author
+  - airplane mechanic
+  - military historian
+  - steeplechase olympian
+  - lederhosen designer
+  - small claims court judge
+  - surrealist painter
+  - end zone photographer
+  - conference attendee
+  - financial adviser
+  - bicycle frame builder
+  - zookeeper
+  - missile silo janitor
+  - flower gardener
+  - lion tamer
+  - air traffic controller
 suffixes:
   - who still lives at home
   - from another planet
@@ -126,7 +168,7 @@ suffixes:
   - who is allergic to gravity
   - who denies the existence of cats
   - who delivered pizzas one summer
-  - able-bodied but mentally slow
+  - who isn't winning any beauty contests
   - and knower of many facts
   - who drives a Zamboni to work
   - who dislikes politics
@@ -140,5 +182,15 @@ suffixes:
   - who is bad at math
   - who can communicate with pigeons
   - and armchair quarterback
-  - from Tulsa
+  - from Tulsa, Oklahoma
   - from the lost city of Atlantis
+  - who likes crumpets and jam
+  - who has a shady past
+  - who wears sunglasses at night
+  - who is on a cross-country journey
+  - who is having second thoughts
+  - who speaks fluent French
+  - who is racing against the clock
+  - who isn't quite sure what year it is
+  - who took a fateful route home
+  - who doesn't know left from right
