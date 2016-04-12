@@ -1,7 +1,21 @@
 # Fictional  Characters - Code Challenge
 This simple app generates humorous descriptions of fictional characters that you might incorporate into your next novel or film project.
-There are a couple of issues with the code.
-Please try to make progress on as many of the points below as you can.
+Descriptions are random combinations of "terms" such as names, nouns and adjectives.
+
+## Example Output
+> My idol has got to be... Camila Cansler, the delusional helicopter pilot who was raised by wolves
+
+or perhaps...
+
+> The movie is about... Marianela Masker, the time-traveling steeplechase olympian who isn't quite sure what year it is
+
+or even...
+
+> The play explores the life of... My unreasonably gullible lederhosen designer, Christia Chirico
+
+## Your Mission
+There are some issues with the code, preventing this app from reaching true greatness.
+Please try to make progress on as many of the tasks below as you can.
 You may use the internet for help, and anyone in the room who may be able to provide a hint.
 
 ## Getting started
