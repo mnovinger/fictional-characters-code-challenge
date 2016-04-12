@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "webpack-dev-server --inline"
+    "server": "node_modules/.bin/webpack-dev-server --inline"
   },
   "author": "sbalay@gmail.com",
   "license": "ISC",
