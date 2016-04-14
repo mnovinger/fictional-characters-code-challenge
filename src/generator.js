@@ -2,15 +2,17 @@ import TermGetter from './termGetter'
 
 const TEMPLATE = require('./app.jade')
 
-const INTRO   = new TermGetter('intros', { suffix: '...' })
-const NAME    = new TermGetter('names', { suffix: ',', upperCase: true })
-const ADJ     = new TermGetter('adjectives')
-const NOUN    = new TermGetter('nouns', { suffix: ',' })
-const SUFFIX  = new TermGetter('suffixes')
+const INTRO             = new TermGetter('intros', { suffix: '...' })
+const NAME              = new TermGetter('names', { upperCase: true })
+const NAME_WITH_COMMA   = new TermGetter('names', { suffix: ',', upperCase: true })
+const ADJ               = new TermGetter('adjectives')
+const NOUN              = new TermGetter('nouns')
+const QUIRK             = new TermGetter('quirks')
+const QUIRK_WITH_COMMA  = new TermGetter('quirks', { suffix: ',' })
 
 const PATTERNS = [
-  [ NAME, 'the', ADJ, NOUN, SUFFIX ],
-  [ [ 'The', 'My' ], ADJ, NOUN, NAME ]
+  [ NAME_WITH_COMMA, 'the', ADJ, NOUN, QUIRK ],
+  [ [ 'The', 'My' ], ADJ, NOUN, QUIRK_WITH_COMMA, NAME ]
 ]
 
 class FictionalCharacterGenerator {
