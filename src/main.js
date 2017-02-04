@@ -1,5 +1,3 @@
-require('./arraySample')
-
 require('./main.less')
 
 import FictionalCharacterGenerator from './generator'

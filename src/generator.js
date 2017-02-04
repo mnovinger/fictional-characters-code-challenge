@@ -1,3 +1,5 @@
+import { sample } from 'lodash'
+
 import TermGetter from './termGetter'
 
 const TEMPLATE = require('./app.jade')
@@ -19,7 +21,7 @@ class FictionalCharacterGenerator {
 
   constructor(container) {
     this._container = container
-    this._pattern = PATTERNS.sample()
+    this._pattern = sample(PATTERNS)
     this._render()
   }
 
@@ -27,14 +29,14 @@ class FictionalCharacterGenerator {
     if (getterOrArrayOrStr instanceof TermGetter) {
       getterOrArrayOrStr.get().then((term) => termElement.textContent = term)
     } else if (Array.isArray(getterOrArrayOrStr)) {
-      termElement.textContent = getterOrArrayOrStr.sample()
+      termElement.textContent = sample(getterOrArrayOrStr)
     } else {  // assume string
       termElement.textContent = getterOrArrayOrStr
     }
   }
 
   _render() {
-    
+
     this._container.innerHTML = TEMPLATE({ num: this._pattern.length })
 
     const introContainer = this._container.querySelector('.intro')

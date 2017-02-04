@@ -25,5 +25,8 @@
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
     "yaml-loader": "^0.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
