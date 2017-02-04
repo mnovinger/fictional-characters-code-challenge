@@ -1,62 +1,64 @@
 import { sample } from 'lodash'
 
-import TermGetter from './termGetter'
+import FragmentGetter from './fragmentGetter'
 
 const TEMPLATE = require('./app.jade')
 
-const INTRO             = new TermGetter('intros', { suffix: '...' })
-const NAME              = new TermGetter('names', { upperCase: true })
-const NAME_WITH_COMMA   = new TermGetter('names', { suffix: ',', upperCase: true })
-const ADJ               = new TermGetter('adjectives')
-const NOUN              = new TermGetter('nouns')
-const QUIRK             = new TermGetter('quirks')
-const QUIRK_WITH_COMMA  = new TermGetter('quirks', { suffix: ',' })
+const INTRO             = new FragmentGetter('intros', { suffix: '...' })
+const NAME              = new FragmentGetter('names', { allCaps: true })
+const NAME_WITH_COMMA   = new FragmentGetter('names', { suffix: ',', allCaps: true })
+const ADJ               = new FragmentGetter('adjectives')
+const NOUN              = new FragmentGetter('nouns')
+const QUIRK             = new FragmentGetter('quirks')
+const QUIRK_WITH_COMMA  = new FragmentGetter('quirks', { suffix: ',' })
 
-const PATTERNS = [
+const SENTENCE_STRUCTURE_PATTERNS = [
   [ NAME_WITH_COMMA, 'the', ADJ, NOUN, QUIRK ],
   [ [ 'The', 'My' ], ADJ, NOUN, QUIRK_WITH_COMMA, NAME ]
 ]
 
 class FictionalCharacterGenerator {
 
-  constructor(container) {
-    this._container = container
-    this._pattern = sample(PATTERNS)
-    this._render()
+  constructor(containerElement) {
+    this._containerElement = containerElement
+    this._sentence_structure_pattern = sample(SENTENCE_STRUCTURE_PATTERNS)
+    this._renderAll()
   }
 
-  _renderTerm(getterOrArrayOrStr, termElement) {
-    if (getterOrArrayOrStr instanceof TermGetter) {
-      getterOrArrayOrStr.get().then((term) => termElement.textContent = term)
+  _renderFragment(getterOrArrayOrStr, fragmentElement) {
+    if (getterOrArrayOrStr instanceof FragmentGetter) {
+      getterOrArrayOrStr.get().then((fragmentText) => fragmentElement.textContent = fragmentText)
     } else if (Array.isArray(getterOrArrayOrStr)) {
-      termElement.textContent = sample(getterOrArrayOrStr)
+      fragmentElement.textContent = sample(getterOrArrayOrStr)
     } else {  // assume string
-      termElement.textContent = getterOrArrayOrStr
+      fragmentElement.textContent = getterOrArrayOrStr
     }
   }
 
-  _render() {
+  _renderAll() {
+    const templateParams = { numFragments: this._sentence_structure_pattern.length }
+    this._containerElement.innerHTML = TEMPLATE(templateParams)
 
-    this._container.innerHTML = TEMPLATE({ num: this._pattern.length })
-
-    const introContainer = this._container.querySelector('.intro')
-    INTRO.get().then((intro) => introContainer.textContent = intro)
-    introContainer.addEventListener('click', (evt) => {
-      this._renderTerm(INTRO, evt.target)
+    const introElement = this._containerElement.querySelector('.intro')
+    INTRO.get().then((intro) => {
+      introElement.textContent = intro
+    })
+    introElement.addEventListener('click', (evt) => {
+      this._renderFragment(INTRO, evt.target)
     })
 
-    this._pattern.forEach((getterOrArrayOrStr, i) => {
-      const termElement = this._container.querySelector(`.term[term-index='${ i }']`)
-      if (termElement) {
-        this._renderTerm(getterOrArrayOrStr, termElement)
-        termElement.addEventListener('click', this._changeHandler.bind(this))
+    this._sentence_structure_pattern.forEach((getterOrArrayOrStr, i) => {
+      const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
+      if (fragmentElement) {
+        this._renderFragment(getterOrArrayOrStr, fragmentElement)
+        fragmentElement.addEventListener('click', this._changeHandler.bind(this))
       }
     })
 
   }
 
   _changeHandler(evt) {
-    this._renderTerm(this._pattern[evt.target.getAttribute('term-index')], evt.target)
+    this._renderFragment(this._sentence_structure_pattern[evt.target.getAttribute('fragment-index')], evt.target)
   }
 
 }

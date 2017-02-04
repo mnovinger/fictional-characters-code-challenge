@@ -1,6 +1,6 @@
-import LocalTermServer from './server/localTermServer'
-import RemoteTermServer from './server/remoteTermServer'
+import LocalServer from './server/localServer'
+import RemoteServer from './server/remoteServer'
 
 export default {
-  termServerClass: LocalTermServer
+  serverClass: LocalServer
 }
