@@ -2,6 +2,8 @@ import { sample } from 'lodash'
 
 import FragmentGetter from './fragmentGetter'
 
+require('./app.less')
+
 const TEMPLATE = require('./app.jade')
 
 const INTRO             = new FragmentGetter('intros', { suffix: '...' })
@@ -17,7 +19,7 @@ const SENTENCE_STRUCTURE_PATTERNS = [
   [ [ 'The', 'My' ], ADJ, NOUN, QUIRK_WITH_COMMA, NAME ]
 ]
 
-class FictionalCharacterGenerator {
+class App {
 
   constructor(containerElement) {
     this._containerElement = containerElement
@@ -63,4 +65,4 @@ class FictionalCharacterGenerator {
 
 }
 
-export default FictionalCharacterGenerator
+export default App
