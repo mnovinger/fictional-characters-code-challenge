@@ -27,14 +27,18 @@ class App {
     this._renderAll()
   }
 
-  _renderFragment(getterOrArrayOrStr, fragmentElement) {
-    if (getterOrArrayOrStr instanceof FragmentGetter) {
-      getterOrArrayOrStr.get().then((fragmentText) => fragmentElement.textContent = fragmentText)
-    } else if (Array.isArray(getterOrArrayOrStr)) {
-      fragmentElement.textContent = sample(getterOrArrayOrStr)
+  _getFragmentResolver(patternItem) {
+    if (patternItem instanceof FragmentGetter) {
+      return patternItem.get()
+    } else if (Array.isArray(patternItem)) {
+      return Promise.resolve(sample(patternItem))
     } else {  // assume string
-      fragmentElement.textContent = getterOrArrayOrStr
+      return Promise.resolve(patternItem)
     }
+  }
+
+  _renderFragment(fragmentElement, fragmentText) {
+    fragmentElement.textContent = fragmentText
   }
 
   /**
@@ -49,21 +53,31 @@ class App {
       introElement.textContent = intro
     })
     introElement.addEventListener('click', (evt) => {
-      this._renderFragment(INTRO, evt.target)
+      this._getFragmentResolver(INTRO)
+        .then((fragmentText) => {
+          this._renderFragment(evt.target, fragmentText)
+        })
     })
 
-    this._sentence_structure_pattern.forEach((getterOrArrayOrStr, i) => {
+    this._sentence_structure_pattern.forEach((patternItem, i) => {
       const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
       if (fragmentElement) {
-        this._renderFragment(getterOrArrayOrStr, fragmentElement)
         fragmentElement.addEventListener('click', this._changeFragmentHandler.bind(this))
+        this._getFragmentResolver(patternItem)
+          .then((fragmentText) => {
+            this._renderFragment(fragmentElement, fragmentText)
+          })
       }
     })
 
   }
 
   _changeFragmentHandler(evt) {
-    this._renderFragment(this._sentence_structure_pattern[evt.target.getAttribute('fragment-index')], evt.target)
+    const patternItem = this._sentence_structure_pattern[evt.target.getAttribute('fragment-index')]
+    this._getFragmentResolver(patternItem)
+      .then((fragmentText) => {
+        this._renderFragment(evt.target, fragmentText)
+      })
   }
 
 }
