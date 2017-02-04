@@ -37,6 +37,9 @@ class App {
     }
   }
 
+  /**
+   * Render the whole app element and attach event handlers.
+   */
   _renderAll() {
     const templateParams = { numFragments: this._sentence_structure_pattern.length }
     this._containerElement.innerHTML = TEMPLATE(templateParams)
@@ -53,13 +56,13 @@ class App {
       const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
       if (fragmentElement) {
         this._renderFragment(getterOrArrayOrStr, fragmentElement)
-        fragmentElement.addEventListener('click', this._changeHandler.bind(this))
+        fragmentElement.addEventListener('click', this._changeFragmentHandler.bind(this))
       }
     })
 
   }
 
-  _changeHandler(evt) {
+  _changeFragmentHandler(evt) {
     this._renderFragment(this._sentence_structure_pattern[evt.target.getAttribute('fragment-index')], evt.target)
   }
 

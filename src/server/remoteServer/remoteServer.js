@@ -1,4 +1,4 @@
-import BaseServer from './baseServer'
+import BaseServer from '../baseServer'
 
 class RemoteServer extends BaseServer {
 
