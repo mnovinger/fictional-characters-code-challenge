@@ -32,13 +32,36 @@ class App {
       return patternItem.fetch()
     } else if (Array.isArray(patternItem)) {
       return Promise.resolve(sample(patternItem))
-    } else {  // assume string
+    } else {  // assume item is a string
       return Promise.resolve(patternItem)
     }
   }
 
-  _renderFragment(fragmentElement, fragmentText) {
-    fragmentElement.textContent = fragmentText
+  _fetchAndRenderFragment(patternItem, fragmentElement) {
+    this._getFragmentResolver(patternItem)
+      .then((fragmentText) => {
+        fragmentElement.textContent = fragmentText
+      })
+  }
+
+  _initIntroElement() {
+    const introElement = this._containerElement.querySelector('.intro')
+    introElement.addEventListener('click', (evt) => {
+      this._fetchAndRenderFragment(INTRO, evt.target)
+    })
+    this._fetchAndRenderFragment(INTRO, introElement)
+  }
+
+  _initSentence() {
+    this._sentence_structure_pattern.forEach((patternItem, i) => {
+      const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
+      if (fragmentElement) {
+        fragmentElement.addEventListener('click', (evt) => {
+          this._fetchAndRenderFragment(patternItem, evt.target)
+        })
+        this._fetchAndRenderFragment(patternItem, fragmentElement)
+      }
+    })
   }
 
   /**
@@ -48,36 +71,8 @@ class App {
     const templateParams = { numFragments: this._sentence_structure_pattern.length }
     this._containerElement.innerHTML = TEMPLATE(templateParams)
 
-    const introElement = this._containerElement.querySelector('.intro')
-    INTRO.fetch().then((intro) => {
-      introElement.textContent = intro
-    })
-    introElement.addEventListener('click', (evt) => {
-      this._getFragmentResolver(INTRO)
-        .then((fragmentText) => {
-          this._renderFragment(evt.target, fragmentText)
-        })
-    })
-
-    this._sentence_structure_pattern.forEach((patternItem, i) => {
-      const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
-      if (fragmentElement) {
-        fragmentElement.addEventListener('click', this._changeFragmentHandler.bind(this))
-        this._getFragmentResolver(patternItem)
-          .then((fragmentText) => {
-            this._renderFragment(fragmentElement, fragmentText)
-          })
-      }
-    })
-
-  }
-
-  _changeFragmentHandler(evt) {
-    const patternItem = this._sentence_structure_pattern[evt.target.getAttribute('fragment-index')]
-    this._getFragmentResolver(patternItem)
-      .then((fragmentText) => {
-        this._renderFragment(evt.target, fragmentText)
-      })
+    this._initIntroElement()
+    this._initSentence()
   }
 
 }
