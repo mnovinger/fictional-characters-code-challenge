@@ -1,6 +1,6 @@
 import config from './config'
 
-class FragmentGetter {
+class FragmentFetcher {
 
   constructor(type, { suffix = '', allCaps = false } = {}) {
     this._type        = type
@@ -9,11 +9,15 @@ class FragmentGetter {
     this._server      = new config.serverClass()
   }
 
-  get() {
+  /**
+   * Returns a promise that resolves to a text fragment of the requested type,
+   * including any client-side modifications.
+   */
+  fetch() {
     const addSuffix = (fragmentText) => `${ fragmentText }${ this._suffix }`
     return this._server.get(this._type)
   }
 
 }
 
-export default FragmentGetter
+export default FragmentFetcher

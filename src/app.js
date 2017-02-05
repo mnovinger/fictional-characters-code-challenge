@@ -1,18 +1,18 @@
 import { sample } from 'lodash'
 
-import FragmentGetter from './fragmentGetter'
+import FragmentFetcher from './fragmentFetcher'
 
 require('./app.less')
 
 const TEMPLATE = require('./app.jade')
 
-const INTRO             = new FragmentGetter('intros', { suffix: '...' })
-const NAME              = new FragmentGetter('names', { allCaps: true })
-const NAME_WITH_COMMA   = new FragmentGetter('names', { suffix: ',', allCaps: true })
-const ADJ               = new FragmentGetter('adjectives')
-const NOUN              = new FragmentGetter('nouns')
-const QUIRK             = new FragmentGetter('quirks')
-const QUIRK_WITH_COMMA  = new FragmentGetter('quirks', { suffix: ',' })
+const INTRO             = new FragmentFetcher('intros', { suffix: '...' })
+const NAME              = new FragmentFetcher('names', { allCaps: true })
+const NAME_WITH_COMMA   = new FragmentFetcher('names', { suffix: ',', allCaps: true })
+const ADJ               = new FragmentFetcher('adjectives')
+const NOUN              = new FragmentFetcher('nouns')
+const QUIRK             = new FragmentFetcher('quirks')
+const QUIRK_WITH_COMMA  = new FragmentFetcher('quirks', { suffix: ',' })
 
 const SENTENCE_STRUCTURE_PATTERNS = [
   [ NAME_WITH_COMMA, 'the', ADJ, NOUN, QUIRK ],
@@ -28,8 +28,8 @@ class App {
   }
 
   _getFragmentResolver(patternItem) {
-    if (patternItem instanceof FragmentGetter) {
-      return patternItem.get()
+    if (patternItem instanceof FragmentFetcher) {
+      return patternItem.fetch()
     } else if (Array.isArray(patternItem)) {
       return Promise.resolve(sample(patternItem))
     } else {  // assume string
@@ -49,7 +49,7 @@ class App {
     this._containerElement.innerHTML = TEMPLATE(templateParams)
 
     const introElement = this._containerElement.querySelector('.intro')
-    INTRO.get().then((intro) => {
+    INTRO.fetch().then((intro) => {
       introElement.textContent = intro
     })
     introElement.addEventListener('click', (evt) => {

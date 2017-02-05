@@ -36,7 +36,7 @@ Clicking on the `ANOTHER!` button will re-render the entire description and intr
 1. The intro string is clickable but doesn't change its appearance on mouseover. Please update the style by referencing the same style definition used within the description.
 1. Clicking the `ANOTHER!` button does not re-render a new character description (and intro string) as intended. Please add this feature without causing the page to be refreshed.
 1. With the `ANOTHER!` button randomizing an entirely new character description, it doesn't ever change its description pattern. The patterns should sometimes show the character's name first, and sometimes last. Please fix!
-1. Some fragments are defined with a suffix of `,` or `...`, but that suffix is not getting rendered. Use the `FragmentGetter`'s promise chain to include this step. Part of the code already exists.
+1. Some fragments are defined with a suffix of `,` or `...`, but that suffix is not getting rendered. Use the `FragmentFetcher`'s promise chain to include this step. Part of the code already exists.
 1. The "name" fragment is defined with an `allCaps` modifier. Like above, create an upper-casing function and include it in the same promise chain so that names will render in all-caps.
 
 ### Have fun!
