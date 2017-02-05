@@ -1,9 +1,11 @@
 .title FICTIONAL CHARACTER GENERATOR
-a.intro
-.sentence
-  - var i = 1
-  while i < numFragments
-    a.fragment(fragment-index=i)
-    =' '
-    - i++
+.panel
+  a.intro
+  =' '
+  .sentence
+    - var i = 1
+    while i < numFragments
+      a.fragment(fragment-index=i)
+      =' '
+      - i++
 button ANOTHER!

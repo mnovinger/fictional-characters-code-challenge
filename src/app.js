@@ -30,6 +30,10 @@ class App {
     this._renderAll()
   }
 
+  /**
+   * Given a pattern item, which may vary in type, return a corresponding
+   * promise that resolves to a random text fragment.
+   */
   _getFragmentResolver(patternItem) {
     if (patternItem instanceof FragmentFetcher) {
       return patternItem.fetch()
