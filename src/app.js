@@ -14,6 +14,9 @@ const NOUN              = new FragmentFetcher('nouns')
 const QUIRK             = new FragmentFetcher('quirks')
 const QUIRK_WITH_COMMA  = new FragmentFetcher('quirks', { suffix: ',' })
 
+// Each sentence pattern is an array where each array item may be a string, an
+// array of strings, or a fetcher object that can asynchronously get a bit of
+// text of a requested type.
 const SENTENCE_STRUCTURE_PATTERNS = [
   [ NAME_WITH_COMMA, 'the', ADJ, NOUN, QUIRK ],
   [ [ 'The', 'My' ], ADJ, NOUN, QUIRK_WITH_COMMA, NAME ]
@@ -38,7 +41,7 @@ class App {
   }
 
   _fetchAndRenderFragment(patternItem, fragmentElement) {
-    this._getFragmentResolver(patternItem)
+    return this._getFragmentResolver(patternItem)
       .then((fragmentText) => {
         fragmentElement.textContent = fragmentText
       })
@@ -49,18 +52,35 @@ class App {
     introElement.addEventListener('click', (evt) => {
       this._fetchAndRenderFragment(INTRO, evt.target)
     })
-    this._fetchAndRenderFragment(INTRO, introElement)
+    return this._fetchAndRenderFragment(INTRO, introElement)
   }
 
   _initSentence() {
-    this._sentence_structure_pattern.forEach((patternItem, i) => {
+    return this._sentence_structure_pattern.map((patternItem, i) => {
       const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
       if (fragmentElement) {
         fragmentElement.addEventListener('click', (evt) => {
           this._fetchAndRenderFragment(patternItem, evt.target)
         })
-        this._fetchAndRenderFragment(patternItem, fragmentElement)
+        return this._fetchAndRenderFragment(patternItem, fragmentElement)
       }
+    })
+  }
+
+  /**
+   * Reset CSS animation.
+   */
+  _resetRevealAnimation() {
+    this._containerElement.classList.add('hidden')
+  }
+
+  /**
+   * Trigger CSS animation by making sure the class changes after the page has
+   * been rendered.
+   */
+  _triggerRevealAnimation() {
+    requestAnimationFrame(() => {
+      this._containerElement.classList.remove('hidden')
     })
   }
 
@@ -68,11 +88,15 @@ class App {
    * Render the whole app element and attach event handlers.
    */
   _renderAll() {
+    this._resetRevealAnimation()
+
     const templateParams = { numFragments: this._sentence_structure_pattern.length }
     this._containerElement.innerHTML = TEMPLATE(templateParams)
 
-    this._initIntroElement()
-    this._initSentence()
+    Promise.all([
+      this._initIntroElement(),
+      this._initSentence()
+    ]).then(this._triggerRevealAnimation.bind(this))
   }
 
 }

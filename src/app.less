@@ -17,10 +17,15 @@ body {
   display: flex;
   justify-content: center;
   .app {
+    transform: perspective(1000px) rotateY(0deg);
+    transition: transform 0.5s;
     margin-top: 20vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    &.hidden {
+      transform: rotateY(90deg);
+    }
     .title {
       color: #C6E070;
       text-align: center;
