@@ -1,12 +1,16 @@
 import config from './config'
 
+/**
+ * Fetch a random fragment from the server of the specified type, and then make any specified
+ * modifications as part of the promise chain.
+ */
 class FragmentFetcher {
 
-  constructor(type, { suffix = '', allCaps = false } = {}) {
-    this._type        = type
-    this._suffix      = suffix
-    this._allCaps     = allCaps
-    this._server      = new config.serverClass()
+  constructor(type, { suffix = '', startCase = false } = {}) {
+    this._type      = type
+    this._suffix    = suffix
+    this._startCase = startCase
+    this._server    = new config.serverClass()
   }
 
   /**
@@ -15,6 +19,7 @@ class FragmentFetcher {
    */
   fetch() {
     const addSuffix = (fragmentText) => `${ fragmentText }${ this._suffix }`
+
     return this._server.get(this._type)
   }
 

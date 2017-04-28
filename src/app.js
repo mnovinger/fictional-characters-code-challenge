@@ -1,4 +1,4 @@
-import { sample } from 'lodash'
+import { sample } from 'lodash'   // returns a random item from an array
 
 import FragmentFetcher from './fragmentFetcher'
 
@@ -7,9 +7,10 @@ require('./app.less')
 const TEMPLATE = require('./app.jade')
 
 const INTRO             = new FragmentFetcher('intros', { suffix: '...' })
-const NAME              = new FragmentFetcher('names', { allCaps: true })
-const NAME_WITH_COMMA   = new FragmentFetcher('names', { suffix: ',', allCaps: true })
+const NAME              = new FragmentFetcher('names', { startCase: true })
+const NAME_WITH_COMMA   = new FragmentFetcher('names', { suffix: ',', startCase: true })
 const ADJ               = new FragmentFetcher('adjectives')
+const ADJ_START_CASED   = new FragmentFetcher('adjectives', { startCase: true })
 const NOUN              = new FragmentFetcher('nouns')
 const QUIRK             = new FragmentFetcher('quirks')
 const QUIRK_WITH_COMMA  = new FragmentFetcher('quirks', { suffix: ',' })
@@ -19,15 +20,24 @@ const QUIRK_WITH_COMMA  = new FragmentFetcher('quirks', { suffix: ',' })
 // text of a requested type.
 const SENTENCE_STRUCTURE_PATTERNS = [
   [ NAME_WITH_COMMA, 'the', ADJ, NOUN, QUIRK ],
-  [ [ 'The', 'My' ], ADJ, NOUN, QUIRK_WITH_COMMA, NAME ]
+  [ [ 'The', 'My' ], ADJ, NOUN, QUIRK_WITH_COMMA, NAME ],
+  [ ADJ_START_CASED, NAME_WITH_COMMA, 'the', NOUN, QUIRK ]
 ]
 
 class App {
 
   constructor(containerElement) {
     this._containerElement = containerElement
-    this._sentence_structure_pattern = sample(SENTENCE_STRUCTURE_PATTERNS)
+  }
+
+  init() {
+    this._sentenceStructurePattern = sample(SENTENCE_STRUCTURE_PATTERNS)
     this._renderAll()
+  }
+
+  static bootstrap(containerElement) {
+    const app = new App(containerElement)
+    app.init()
   }
 
   /**
@@ -60,7 +70,7 @@ class App {
   }
 
   _initSentence() {
-    return this._sentence_structure_pattern.map((patternItem, i) => {
+    const promises = this._sentenceStructurePattern.map((patternItem, i) => {
       const fragmentElement = this._containerElement.querySelector(`.fragment[fragment-index='${ i }']`)
       if (fragmentElement) {
         fragmentElement.addEventListener('click', (evt) => {
@@ -69,6 +79,7 @@ class App {
         return this._fetchAndRenderFragment(patternItem, fragmentElement)
       }
     })
+    return Promise.all(promises)
   }
 
   /**
@@ -94,7 +105,7 @@ class App {
   _renderAll() {
     this._resetRevealAnimation()
 
-    const templateParams = { numFragments: this._sentence_structure_pattern.length }
+    const templateParams = { numFragments: this._sentenceStructurePattern.length }
     this._containerElement.innerHTML = TEMPLATE(templateParams)
 
     Promise.all([

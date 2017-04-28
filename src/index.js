@@ -1,3 +1,3 @@
 import App from './app'
 
-new App(document.querySelector('.app'))
+App.bootstrap(document.querySelector('.app'))

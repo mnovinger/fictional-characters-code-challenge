@@ -32,11 +32,11 @@ Clicking on the `ANOTHER!` button will re-render the entire description and intr
 
 ## Tasks
 1. Discover where the sentence fragments are stored, and add some of your own.
-1. Each description contains five fragments, and each fragment is rendered to its own page element. However, only four of the five elements are showing up on the page. Please fix!
+1. Each description contains five fragments, and each fragment is rendered to its own page element. However, only four of the five elements are showing up on the page. Please fix! Note that a 'fragment' is a portion of the sentence that highlights as a single color on mouse hover.
 1. The intro string is clickable but doesn't change its appearance on mouseover. Please update the style by referencing the same LESS mixin used within the description.
-1. Clicking the `ANOTHER!` button does not re-render a new character description (and intro string) as intended. Please add this feature without causing the page to be refreshed.
-1. With the `ANOTHER!` button randomizing an entirely new character description, it doesn't ever change its description pattern. The patterns should sometimes show the character's name first, and sometimes last. Please fix!
+1. Clicking the `ANOTHER!` button should cause the app to be re-rendered, but it is broken. Please add this feature without simply causing the page to refresh.
+1. Ensure that the `ANOTHER!` button randomly chooses one of the three sentence patterns each time it is clicked.
 1. Some fragments are defined with a suffix of `,` or `...`, but that suffix is not getting rendered. Use the `FragmentFetcher`'s promise chain to include this step. Part of the code already exists.
-1. The "name" fragment is defined with an `allCaps` modifier. Like above, create an upper-casing function and include it in the same promise chain so that names will render in all-caps.
+1. The "name" fragment is defined with a `startCase` modifier. Like above, create a function and include it in the same promise chain so that names will render start-cased (for example, 'tatiana toon' will render as 'Tatiana Toon').
 
 ### Have fun!
