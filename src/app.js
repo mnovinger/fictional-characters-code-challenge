@@ -82,6 +82,12 @@ class App {
     return Promise.all(promises)
   }
 
+  _initRefreshButton() {
+    this._containerElement.querySelector('button.refetch').addEventListener('click', (evt) => {
+      this._renderAll()
+    })
+  }
+
   /**
    * Reset CSS animation.
    */
@@ -108,6 +114,7 @@ class App {
     const templateParams = { numFragments: this._sentenceStructurePattern.length }
     this._containerElement.innerHTML = TEMPLATE(templateParams)
 
+    this._initRefreshButton()
     Promise.all([
       this._initIntroElement(),
       this._initSentence()
