@@ -18,9 +18,21 @@ class FragmentFetcher {
    * including any client-side modifications.
    */
   fetch() {
+    const startCase = (fragmentText) => {
+      if (this._startCase) {
+        return fragmentText.split(' ').map((part) => {
+          return part[0].toUpperCase() + part.slice(1).toLowerCase()
+        }).join(' ')
+      }
+      else {
+        return fragmentText
+      }
+    }
     const addSuffix = (fragmentText) => `${ fragmentText }${ this._suffix }`
 
-    return this._server.get(this._type).then(addSuffix)
+    return this._server.get(this._type).then((fragmentText) => {
+      return addSuffix(startCase(fragmentText))
+    })
   }
 
 }
