@@ -20,7 +20,7 @@ class FragmentFetcher {
   fetch() {
     const addSuffix = (fragmentText) => `${ fragmentText }${ this._suffix }`
 
-    return this._server.get(this._type)
+    return this._server.get(this._type).then(addSuffix)
   }
 
 }
