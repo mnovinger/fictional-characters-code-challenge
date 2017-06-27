@@ -31,7 +31,6 @@ class App {
   }
 
   init() {
-    this._sentenceStructurePattern = sample(SENTENCE_STRUCTURE_PATTERNS)
     this._renderAll()
   }
 
@@ -109,6 +108,7 @@ class App {
    * Render the whole app element and attach event handlers.
    */
   _renderAll() {
+    this._sentenceStructurePattern = sample(SENTENCE_STRUCTURE_PATTERNS)
     this._resetRevealAnimation()
 
     const templateParams = { numFragments: this._sentenceStructurePattern.length }
